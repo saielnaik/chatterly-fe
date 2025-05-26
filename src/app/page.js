@@ -146,12 +146,18 @@ export default function Home() {
     <div className="max-w-2xl mx-auto px-4 py-6 min-h-screen text-white">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-extrabold text-[#CF0F47]">Chatterly</h1>
-        <div className="space-x-2">
+        <div className="flex space-x-2">
           <button onClick={() => router.push('/user')} className="text-sm px-4 py-2 rounded-full border border-[#CF0F47] text-[#CF0F47] hover:bg-[#CF0F47] hover:text-white transition">
             Profile
           </button>
-          <button onClick={() => router.push('/create-post')} className="bg-[#CF0F47] text-white text-sm px-4 py-2 rounded-full hover:bg-[#FF0B55] transition">
-            + New Post
+          <button
+            onClick={() => router.push('/create-post')}
+            className="group relative bg-[#CF0F47] text-white text-sm px-3 py-2 rounded-full hover:bg-[#FF0B55] transition flex items-center justify-center w-10"
+          >
+            <span className="pointer-events-none">+</span>
+            <span className="absolute left-full ml-2 opacity-0 group-hover:opacity-100 whitespace-nowrap bg-[#CF0F47] text-white text-xs rounded px-2 py-1 transition-opacity">
+              New Post
+            </span>
           </button>
         </div>
       </header>
