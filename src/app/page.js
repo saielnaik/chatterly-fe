@@ -197,7 +197,7 @@ export default function Home() {
             {post.imageUrl && <img src={post.imageUrl} className="w-full rounded-lg mb-3" />}
 
             <div className="flex space-x-3 text-sm mb-4">
-              <button onClick={() => handleReact(post._id, 'like')} className="flex items-center space-x-1 text-[#CF0F47] hover:text-[#FF0B55]">
+              <button onClick={() => handleReact(post._id, 'like')} className="flex items-center space-x-1 bg-[#CF0F47] p-2 rounded-xl hover:text-[#FF0B55]">
                 👍 <span>{post.likes?.length || 0}</span>
               </button>
               <button onClick={() => handleReact(post._id, 'dislike')} className="flex items-center space-x-1 text-gray-400 hover:text-gray-200">
