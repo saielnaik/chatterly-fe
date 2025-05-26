@@ -33,15 +33,12 @@ export default function CreatePost() {
     setLoadingCoords(true);
     setMessage('');
     try {
-      const response = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json`,
-        {
-          params: {
-            q: form.locationName,
-            key: '87e40b9381c74fc2b53b3eea0fda48f5',
-          },
-        }
-      );
+      const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+        params: {
+          q: form.locationName,
+          key: '87e40b9381c74fc2b53b3eea0fda48f5',
+        },
+      });
 
       const result = response.data.results[0];
       if (result) {
@@ -94,104 +91,84 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="container my-5" style={{ maxWidth: '600px' }}>
-      <div className="card shadow-sm p-4">
-        <h1 className="h4 mb-4 text-center">Create Post</h1>
+    <div className="max-w-xl mx-auto mt-8 p-6 bg-[#0F0F0F] text-white rounded-xl shadow-lg border border-gray-800">
+      <h1 className="text-2xl font-bold text-center text-[#CF0F47] mb-6">Create Post</h1>
 
-        {message && (
-          <div
-            className={`alert ${
-              message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')
-                ? 'alert-danger'
-                : 'alert-info'
-            }`}
-            role="alert"
-          >
-            {message}
-          </div>
+      {message && (
+        <div
+          className={`mb-4 p-3 rounded-lg text-sm ${
+            message.toLowerCase().includes('error') || message.toLowerCase().includes('failed')
+              ? 'bg-red-800 text-red-200'
+              : 'bg-[#222] text-[#CF0F47]'
+          }`}
+        >
+          {message}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <textarea
+            name="text"
+            value={form.text}
+            onChange={handleChange}
+            placeholder="What's on your mind?"
+            required
+            rows={4}
+            maxLength={500}
+            className="w-full bg-[#1F1F1F] text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#CF0F47]"
+          />
+          <p className="text-sm text-gray-500 mt-1">Max 500 characters</p>
+        </div>
+
+        <select
+          name="postType"
+          value={form.postType}
+          onChange={handleChange}
+          className="w-full bg-[#1F1F1F] text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#CF0F47]"
+        >
+          <option value="recommend">Recommend</option>
+          <option value="help">Help</option>
+          <option value="update">Update</option>
+          <option value="event">Event</option>
+        </select>
+
+        <input
+          name="locationName"
+          value={form.locationName}
+          onChange={handleChange}
+          placeholder="Type location"
+          className="w-full bg-[#1F1F1F] text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#CF0F47]"
+        />
+
+        <button
+          type="button"
+          onClick={fetchCoordinates}
+          disabled={loadingCoords}
+          className="w-full bg-transparent border border-gray-600 text-white p-2 rounded-lg hover:bg-[#CF0F47] hover:text-white transition"
+        >
+          {loadingCoords ? 'Fetching Coordinates...' : 'Get Coordinates'}
+        </button>
+
+        {form.coordinates && (
+          <p className="text-sm text-gray-400">Coordinates: {form.coordinates}</p>
         )}
 
-        <form onSubmit={handleSubmit} noValidate>
-          <div className="mb-3">
-            <textarea
-              name="text"
-              value={form.text}
-              onChange={handleChange}
-              placeholder="What's on your mind?"
-              required
-              className="form-control"
-              rows={4}
-              maxLength={500}
-              style={{ resize: 'vertical' }}
-            />
-            <small className="form-text text-muted">Max 500 characters</small>
-          </div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="w-full bg-[#1F1F1F] text-gray-300 p-2 rounded-lg border border-gray-700 file:bg-[#CF0F47] file:text-white file:border-0 file:rounded-lg file:px-4 file:py-2"
+        />
 
-          <div className="mb-3">
-            <select
-              name="postType"
-              value={form.postType}
-              onChange={handleChange}
-              className="form-select"
-              aria-label="Select post type"
-            >
-              <option value="recommend">Recommend</option>
-              <option value="help">Help</option>
-              <option value="update">Update</option>
-              <option value="event">Event</option>
-            </select>
-          </div>
-
-          <div className="mb-3">
-            <input
-              name="locationName"
-              value={form.locationName}
-              onChange={handleChange}
-              placeholder="Type location"
-              className="form-control"
-              autoComplete="off"
-              aria-label="Location name"
-            />
-          </div>
-
-          <div className="mb-3 d-grid">
-            <button
-              type="button"
-              onClick={fetchCoordinates}
-              disabled={loadingCoords}
-              className="btn btn-outline-secondary"
-            >
-              {loadingCoords ? 'Fetching Coordinates...' : 'Get Coordinates'}
-            </button>
-          </div>
-
-          {form.coordinates && (
-            <div className="form-text mb-3 text-break text-secondary">
-              Coordinates: {form.coordinates}
-            </div>
-          )}
-
-          <div className="mb-4">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="form-control"
-              aria-label="Upload image"
-            />
-          </div>
-
-          <div className="d-grid">
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn btn-primary btn-lg"
-            >
-              {loading ? 'Submitting...' : 'Submit Post'}
-            </button>
-          </div>
-        </form>
-      </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-[#CF0F47] hover:bg-[#FF0B55] text-white p-3 rounded-lg transition font-semibold"
+        >
+          {loading ? 'Submitting...' : 'Submit Post'}
+        </button>
+      </form>
     </div>
   );
 }
