@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:4000/api/auth', // Update to your backend URL
+  baseURL: 'https://chatterly-be-7tk3.onrender.com/api/auth', // Update to your backend URL
 });
 
 export const signup = (formData) => API.post('/signup', formData);

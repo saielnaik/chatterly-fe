@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:4000/api/posts',
+  baseURL: 'https://chatterly-be-7tk3.onrender.com/api/posts',
 });
 
 export const createPost = (formData, config = {}) => API.post('/create', formData, config);

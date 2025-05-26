@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:4000/api/user',
+  baseURL: 'https://chatterly-be-7tk3.onrender.com/api/user',
 });
 
 // No uuid param needed anymore, backend uses token to identify user
